@@ -1,0 +1,42 @@
+# Maven build output
+target/
+
+# Compiled class files and packaged artifacts
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+logs/
+
+# macOS
+.DS_Store
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Local runtime/temp files
+tmp/
+temp/
+
+# Payara Micro local binary (downloaded manually)
+payara-micro.jar
