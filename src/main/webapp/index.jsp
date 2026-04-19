@@ -6,347 +6,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ledger Studio | EJB Banking</title>
+    <title>Northline Vault | EJB Banking</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cream: #fdf6e6;
-            --paper: #fff9ef;
-            --ink: #152021;
-            --teal: #2b7a78;
-            --coral: #f27147;
-            --mint: #6fcf97;
-            --error: #c0392b;
-            --ring: #1e5453;
-            --line: #213d3d;
+            --bg: #eef4ff;
+            --surface: #ffffff;
+            --line: #d3def3;
+            --ink: #111c3b;
+            --muted: #4f6190;
+            --primary: #1f4ed8;
+            --secondary: #0f766e;
+            --accent: #a3e635;
+            --success-bg: #e8f8ea;
+            --success-border: #9bd0a3;
+            --error-bg: #ffebef;
+            --error-border: #ef9fb0;
+            --shadow: rgba(25, 48, 102, 0.16);
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            font-family: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
             color: var(--ink);
-            background:
-                radial-gradient(circle at 10% 15%, rgba(242, 113, 71, 0.2), transparent 28%),
-                radial-gradient(circle at 90% 80%, rgba(111, 207, 151, 0.25), transparent 24%),
-                repeating-linear-gradient(
-                    45deg,
-                    rgba(21, 32, 33, 0.05) 0,
-                    rgba(21, 32, 33, 0.05) 2px,
-                    transparent 2px,
-                    transparent 14px
-                ),
-                var(--cream);
             min-height: 100vh;
+            background:
+                radial-gradient(circle at 8% 10%, rgba(31, 78, 216, 0.18), transparent 25%),
+                radial-gradient(circle at 92% 8%, rgba(163, 230, 53, 0.2), transparent 20%),
+                linear-gradient(180deg, #f9fbff, var(--bg));
         }
 
-        .page {
-            width: min(1150px, 92vw);
-            margin: 2rem auto 3rem;
-            animation: rise 650ms cubic-bezier(0.17, 0.67, 0.3, 1) both;
+        .shell {
+            width: min(1220px, 94vw);
+            margin: 1.5rem auto 2.8rem;
+            animation: rise 560ms ease both;
         }
 
         .hero {
-            background: linear-gradient(135deg, #153534, #215454 65%, #2d7170);
-            color: #fefefe;
-            border: 2px solid #0c1a1a;
-            border-radius: 26px;
-            padding: 1.4rem 1.6rem 1.6rem;
-            box-shadow: 0 14px 0 #0d1a1a;
+            border: 1px solid #c6d3f1;
+            border-radius: 24px;
+            background: linear-gradient(128deg, #102247, #1f4ed8 62%, #2d67f8 100%);
+            color: #f3f7ff;
+            box-shadow: 0 18px 34px rgba(31, 78, 216, 0.24);
+            overflow: hidden;
+            position: relative;
         }
 
-        .chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.74rem;
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(-35deg, rgba(255, 255, 255, 0.08) 0, rgba(255, 255, 255, 0.08) 8px, transparent 8px, transparent 20px);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            padding: 1.25rem 1.35rem 1.45rem;
+        }
+
+        .pill {
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 999px;
+            padding: 0.28rem 0.62rem;
+            font-size: 0.7rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 0.34rem 0.62rem;
-            background: rgba(255, 255, 255, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.34);
-            border-radius: 999px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .hero h1 {
-            font-family: "Fraunces", Georgia, serif;
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            margin: 0.9rem 0 0.35rem;
-            line-height: 1.05;
-            letter-spacing: 0.01em;
+            margin: 0.72rem 0 0.36rem;
+            font-family: "Newsreader", Georgia, serif;
+            font-size: clamp(2rem, 4.1vw, 3.1rem);
+            line-height: 1.03;
         }
 
         .hero p {
             margin: 0;
-            max-width: 62ch;
-            color: rgba(255, 255, 255, 0.88);
-            font-size: 1.03rem;
+            max-width: 64ch;
+            color: rgba(243, 247, 255, 0.92);
+            font-size: 0.98rem;
         }
 
-        .message {
-            margin-top: 1rem;
-            border: 2px solid;
-            border-radius: 15px;
-            padding: 0.7rem 0.9rem;
-            font-size: 0.95rem;
-            animation: pop 400ms ease-out both;
+        .flash {
+            margin-top: 0.95rem;
+            border: 1px solid;
+            border-radius: 12px;
+            padding: 0.68rem 0.8rem;
+            font-size: 0.9rem;
         }
 
-        .success {
-            background: rgba(111, 207, 151, 0.15);
-            border-color: #2d7a56;
-            color: #1f4f38;
-        }
-
-        .error {
-            background: #ffe9e6;
-            border-color: #de6959;
-            color: #7d1f14;
-        }
+        .flash.ok { background: var(--success-bg); border-color: var(--success-border); color: #1d4f2f; }
+        .flash.fail { background: var(--error-bg); border-color: var(--error-border); color: #8b1f39; }
 
         .grid {
-            margin-top: 1.25rem;
+            margin-top: 1rem;
             display: grid;
-            grid-template-columns: repeat(12, minmax(0, 1fr));
+            grid-template-columns: 1fr;
             gap: 1rem;
         }
 
         .panel {
-            background: var(--paper);
-            border: 2px solid var(--line);
-            border-radius: 24px;
-            padding: 1.15rem;
-            box-shadow: 0 9px 0 rgba(21, 32, 33, 0.9);
-            animation: floatIn 640ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: var(--surface);
+            box-shadow: 0 12px 25px var(--shadow);
+            padding: 1rem;
         }
 
-        .panel h2 {
-            margin: 0 0 0.35rem;
-            font-size: 1.25rem;
-            letter-spacing: 0.01em;
+        .title { margin: 0; font-size: 1.06rem; }
+        .subtitle { margin: 0.25rem 0 0.86rem; color: var(--muted); font-size: 0.88rem; }
+
+        .modules {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.85rem;
         }
 
-        .panel p {
-            margin: 0 0 1rem;
-            font-size: 0.93rem;
-            color: #365556;
+        .module {
+            border: 1px solid #dce6f8;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #ffffff, #f9fbff);
+            padding: 0.86rem;
+            animation: pop 520ms ease both;
         }
 
-        .panel.create {
-            grid-column: span 4;
-            animation-delay: 90ms;
-        }
-
-        .panel.txn {
-            grid-column: span 4;
-            animation-delay: 170ms;
-        }
-
-        .panel.summary {
-            grid-column: span 4;
-            animation-delay: 250ms;
-            background: linear-gradient(160deg, #fff5df, #fff9f0 40%, #eefaf5);
-        }
+        .module:nth-child(2) { animation-delay: 100ms; }
+        .module h3 { margin: 0; font-size: 0.95rem; }
+        .module p { margin: 0.28rem 0 0.72rem; color: #5a6d98; font-size: 0.82rem; }
 
         label {
             display: block;
-            font-size: 0.82rem;
-            font-weight: 700;
+            margin: 0.56rem 0 0.24rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin: 0.66rem 0 0.28rem;
-            color: #1f3f3f;
+            font-weight: 700;
+            color: #42537e;
         }
 
-        input,
-        select,
-        button {
+        input, select, button {
             width: 100%;
-            font-family: inherit;
-            font-size: 0.97rem;
-            border-radius: 12px;
-            border: 2px solid #244646;
-            padding: 0.64rem 0.72rem;
-            outline: none;
+            font: inherit;
+            border-radius: 10px;
         }
 
-        input:focus,
-        select:focus {
-            border-color: var(--ring);
-            box-shadow: 0 0 0 4px rgba(46, 111, 109, 0.17);
+        input, select {
+            border: 1px solid #bccbea;
+            padding: 0.55rem 0.62rem;
+            background: #ffffff;
+            color: var(--ink);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2f61e8;
+            box-shadow: 0 0 0 3px rgba(47, 97, 232, 0.14);
         }
 
         button {
-            margin-top: 0.85rem;
+            border: 0;
+            margin-top: 0.76rem;
+            padding: 0.58rem;
+            color: white;
             font-weight: 700;
-            letter-spacing: 0.02em;
             cursor: pointer;
-            transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+            transition: transform 160ms ease, filter 160ms ease;
         }
 
-        .primary {
-            background: linear-gradient(135deg, #f27147, #ef5c2a);
-            color: white;
-            box-shadow: 0 6px 0 #ad3a18;
+        .btn-primary { background: linear-gradient(135deg, #1f4ed8, #2d69ff); }
+        .btn-secondary { background: linear-gradient(135deg, #0f766e, #15968a); }
+        button:hover { transform: translateY(-1px); filter: brightness(1.03); }
+
+        .card {
+            border: 1px solid #dae4f6;
+            border-radius: 14px;
+            padding: 0.82rem;
+            background: linear-gradient(180deg, #ffffff, #fbfdff);
+            margin-bottom: 0.78rem;
         }
 
-        .secondary {
-            background: linear-gradient(135deg, #2e8886, #266f6d);
-            color: white;
-            box-shadow: 0 6px 0 #154847;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            filter: saturate(1.05);
-        }
-
-        .summary-card {
-            border: 2px dashed #2a5858;
-            border-radius: 16px;
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.66);
-            margin-bottom: 0.75rem;
-        }
-
-        .summary-card h3 {
-            margin: 0 0 0.5rem;
-            font-size: 0.85rem;
-            text-transform: uppercase;
+        .kicker {
+            margin: 0 0 0.34rem;
+            font-size: 0.71rem;
             letter-spacing: 0.08em;
-            color: #2e5152;
+            text-transform: uppercase;
+            color: #5f73a0;
         }
 
         .balance {
-            font-family: "Fraunces", Georgia, serif;
-            font-size: 2.05rem;
             margin: 0;
+            font-family: "Newsreader", Georgia, serif;
+            font-size: 2rem;
+            line-height: 1;
         }
 
         .dash {
-            font-size: 1.5rem;
-            color: #527070;
+            margin: 0;
+            color: #6679a3;
+            font-size: 1.6rem;
+            line-height: 1;
         }
 
-        .meta {
+        .receipt {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            gap: 0.46rem;
+        }
+
+        .kv {
+            border: 1px solid #dce6f8;
+            border-radius: 10px;
+            padding: 0.42rem;
+            font-size: 0.8rem;
+            background: #ffffff;
+        }
+
+        .kv span {
+            display: block;
+            margin-bottom: 0.12rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #5c6f99;
+        }
+
+        .kv.full { grid-column: 1 / -1; }
+
+        .quick {
+            display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
         }
 
-        .meta-item {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid #8fa8a9;
-            border-radius: 11px;
-            padding: 0.45rem;
-            font-size: 0.84rem;
-        }
-
-        .meta-item span {
-            display: block;
-            color: #38595a;
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 0.16rem;
-        }
-
-        .actions {
-            margin-top: 0.8rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.55rem;
-        }
-
-        .actions a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.53rem 0.75rem;
-            border-radius: 11px;
-            border: 2px solid #1e4041;
+        .quick a {
             text-decoration: none;
-            font-size: 0.86rem;
+            border: 1px solid #c0cfed;
+            border-radius: 9px;
+            padding: 0.45rem 0.66rem;
+            background: #f4f7ff;
+            color: #273e70;
+            font-size: 0.8rem;
             font-weight: 700;
-            color: #173233;
-            background: #fff;
-            transition: transform 180ms ease, background 180ms ease;
         }
 
-        .actions a:hover {
-            transform: translateY(-2px);
-            background: #fff4dd;
-        }
+        .quick a:hover { background: #edf2ff; }
 
         @keyframes rise {
-            from {
-                opacity: 0;
-                transform: translateY(22px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes floatIn {
-            from {
-                opacity: 0;
-                transform: translateY(18px) scale(0.99);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pop {
-            from {
-                opacity: 0;
-                transform: scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 1000px) {
-            .panel.create,
-            .panel.txn,
-            .panel.summary {
-                grid-column: span 6;
-            }
-
-            .panel.summary {
-                grid-column: span 12;
-            }
+        @media (max-width: 980px) {
+            .grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 700px) {
-            .page {
-                width: min(96vw, 640px);
-                margin-top: 1rem;
-            }
-
-            .hero {
-                border-radius: 20px;
-            }
-
-            .panel.create,
-            .panel.txn,
-            .panel.summary {
-                grid-column: span 12;
-            }
-
-            .meta {
-                grid-template-columns: 1fr;
-            }
+            .modules, .receipt { grid-template-columns: 1fr; }
+            .shell { margin-top: 1rem; }
         }
     </style>
 </head>
@@ -363,63 +293,72 @@
             : "";
 %>
 
-<main class="page">
+<main class="shell">
     <section class="hero">
-        <span class="chip">EJB Business Interface Demo</span>
-        <h1>Ledger Studio</h1>
-        <p>A bold banking workspace for account opening, deposits, and withdrawals powered by EJB transaction logic.</p>
+        <div class="hero-inner">
+            <!-- <span class="pill">EJB Interface Demo</span> -->
+            <h1>EJB Bank</h1>
+            <!-- <p>Manage account setup, deposits, and withdrawals through a streamlined transaction workspace.</p> -->
+        </div>
     </section>
 
     <% if (message != null) { %>
-    <div class="message success"><strong>Success:</strong> <%= message %></div>
+    <div class="flash ok"><strong>Success:</strong> <%= message %></div>
     <% } %>
     <% if (error != null) { %>
-    <div class="message error"><strong>Action Failed:</strong> <%= error %></div>
+    <div class="flash fail"><strong>Action Failed:</strong> <%= error %></div>
     <% } %>
 
     <section class="grid">
-        <article class="panel create">
-            <h2>Open New Account</h2>
-            <p>Start a ledger with an optional opening deposit.</p>
-            <form method="post" action="<%= contextPath %>/transaction">
-                <input type="hidden" name="action" value="create">
+        <section class="panel">
+            <h2 class="title">Operation Console</h2>
+            <p class="subtitle">Create new accounts or submit transactions against an existing account.</p>
 
-                <label for="newAccountId">Account ID</label>
-                <input id="newAccountId" name="accountId" placeholder="A1001" required>
+            <div class="modules">
+                <article class="module">
+                    <h3>Create Account</h3>
+                    <p>Open a ledger with optional opening balance.</p>
+                    <form method="post" action="<%= contextPath %>/transaction">
+                        <input type="hidden" name="action" value="create">
 
-                <label for="openingDeposit">Opening Deposit</label>
-                <input id="openingDeposit" name="amount" type="number" step="0.01" min="0" placeholder="0.00">
+                        <label for="newAccountId">Account ID</label>
+                        <input id="newAccountId" name="accountId" placeholder="Vedant" required>
 
-                <button class="primary" type="submit">Create Account</button>
-            </form>
-        </article>
+                        <label for="openingDeposit">Opening Deposit</label>
+                        <input id="openingDeposit" name="amount" type="number" step="0.01" min="0" placeholder="0.00">
 
-        <article class="panel txn">
-            <h2>Run Transaction</h2>
-            <p>Deposit or withdraw against an existing account.</p>
-            <form method="post" action="<%= contextPath %>/transaction">
-                <label for="existingAccountId">Account ID</label>
-                <input id="existingAccountId" name="accountId" value="<%= currentAccountId == null ? "" : currentAccountId %>" required>
+                        <button class="btn-primary" type="submit">Create</button>
+                    </form>
+                </article>
 
-                <label for="operation">Operation</label>
-                <select id="operation" name="action" required>
-                    <option value="deposit">Deposit</option>
-                    <option value="withdraw">Withdraw</option>
-                </select>
+                <article class="module">
+                    <h3>Deposit / Withdraw</h3>
+                    <p>Post a transaction on a registered account.</p>
+                    <form method="post" action="<%= contextPath %>/transaction">
+                        <label for="existingAccountId">Account ID</label>
+                        <input id="existingAccountId" name="accountId" value="<%= currentAccountId == null ? "" : currentAccountId %>" required>
 
-                <label for="txnAmount">Amount</label>
-                <input id="txnAmount" name="amount" type="number" step="0.01" min="0.01" required>
+                        <label for="operation">Operation</label>
+                        <select id="operation" name="action" required>
+                            <option value="deposit">Deposit</option>
+                            <option value="withdraw">Withdraw</option>
+                        </select>
 
-                <button class="secondary" type="submit">Process</button>
-            </form>
-        </article>
+                        <label for="txnAmount">Amount</label>
+                        <input id="txnAmount" name="amount" type="number" step="0.01" min="0.01" required>
 
-        <aside class="panel summary">
-            <h2>Live Snapshot</h2>
-            <p>Most recent account status and transaction receipt.</p>
+                        <button class="btn-secondary" type="submit">Submit</button>
+                    </form>
+                </article>
+            </div>
+        </section>
 
-            <div class="summary-card">
-                <h3>Current Balance</h3>
+        <aside class="panel">
+            <h2 class="title">Instant Overview</h2>
+            <p class="subtitle">Latest account balance and transaction receipt.</p>
+
+            <div class="card">
+                <p class="kicker">Current Balance</p>
                 <% if (currentBalance != null) { %>
                 <p class="balance"><%= currentBalance %></p>
                 <% } else { %>
@@ -427,22 +366,22 @@
                 <% } %>
             </div>
 
-            <div class="summary-card">
-                <h3>Last Receipt</h3>
+            <div class="card">
+                <p class="kicker">Latest Receipt</p>
                 <% if (receipt != null) { %>
-                <div class="meta">
-                    <div class="meta-item"><span>Txn ID</span><%= receipt.getTransactionId() %></div>
-                    <div class="meta-item"><span>Type</span><%= receipt.getTransactionType() %></div>
-                    <div class="meta-item"><span>Amount</span><%= receipt.getAmount() %></div>
-                    <div class="meta-item"><span>After Txn</span><%= receipt.getBalanceAfterTransaction() %></div>
-                    <div class="meta-item" style="grid-column: 1 / -1;"><span>Timestamp</span><%= receipt.getTimestamp() %></div>
+                <div class="receipt">
+                    <div class="kv"><span>Txn ID</span><%= receipt.getTransactionId() %></div>
+                    <div class="kv"><span>Type</span><%= receipt.getTransactionType() %></div>
+                    <div class="kv"><span>Amount</span><%= receipt.getAmount() %></div>
+                    <div class="kv"><span>Balance After</span><%= receipt.getBalanceAfterTransaction() %></div>
+                    <div class="kv full"><span>Timestamp</span><%= receipt.getTimestamp() %></div>
                 </div>
                 <% } else { %>
                 <p class="dash">-</p>
                 <% } %>
             </div>
 
-            <div class="actions">
+            <div class="quick">
                 <a href="<%= contextPath %>/history<%= accountQuery %>">View History</a>
                 <a href="<%= contextPath %>/transaction">Refresh</a>
             </div>
